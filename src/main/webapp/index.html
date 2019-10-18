@@ -1,0 +1,350 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>好的大学,没有围墙</title>
+    <link rel="stylesheet" href="css/cebian.css">
+    <link rel="shortcut icon" href="favicon.ICO" type="image/x-icon"/>
+</head>
+
+<script src="js/jquery-3.4.1.js"></script>
+<!-- <script src="js/cebian.js"></script> -->
+<script>
+    function Function1() {//直接请求推荐课程并显示
+        var html = "<TR>\n" +
+            "<TD>上课班号</TD>" +
+            "<TD>课程名称</TD>" +
+            "<TD>教师姓名</TD>" +
+            "<TD>教学班/开课学院</TD>" +
+            "<TD>周学时</TD>" +
+            "<TD>考核</TD>" +
+            "<TD>上课时间</TD>" +
+            "<TD>上课地点</TD>" +
+            "<TD>校区</TD>" +
+            "<TD>备注</TD>" +
+            "<TD>授课方式</TD>" +
+            "<TD>是否短学期</TD>" +
+            "<TD>容量(人数)</TD>" +
+            "<TD>教材名称</TD>" +
+            "<TD>学分</TD>" +
+            "</TR>";
+        $.ajax({
+            url: "recommend",
+            type: "get",
+            dataType: "json",
+            async: false,
+            success: function (data, textStatus) {
+                for (var i = 0; i < data.length; i++) {
+                    html += "<tr>" +
+                        "<td>" + data[i].kechengdaima + "</td>" +
+                        "<td>" + data[i].kechengmingcheng + "</td>" +
+                        "<td>" + data[i].jiaoshixingming + "</td>" +
+                        "<td>" + data[i].jiaoxueban + "</td>" +
+                        "<td>" + data[i].zhouxueshi + "</td>" +
+                        "<td>" + data[i].kaohe + "</td>" +
+                        "<td>" + data[i].shangkeshijian + "</td>" +
+                        "<td>" + data[i].shangkedidian + "</td>" +
+                        "<td>" + data[i].xiaoqv + "</td>" +
+                        "<td>" + data[i].beizhu + "</td>" +
+                        "<td>" + data[i].shoukefangshi + "</td>" +
+                        "<td>" + data[i].shifouduanxueqi + "</td>" +
+                        "<td>" + data[i].rongliang + "</td>" +
+                        "<td>" + data[i].jiaocaimingcheng + "</td>" +
+                        "<td>" + data[i].xuefen + "</td>" +
+                        "</tr>";
+                }
+            }
+        });
+
+        $("#mainfield").html(html);
+        /*        document.getElementById("mainfield").innerHTML = html;*/
+    }
+
+    function Function2() {//展示搜索框
+        $("#mainfield").html("<div id=\"labeldiv1\"></div>\n" +
+            "            <div id=\"labeldiv2\"></div>");
+        var html = "<input id=\"input2\" type=\"text\">\n" +
+            "            <button id=\"button2\" type=\"button\" onclick='Function22()'>输入教师姓名并点击</button>";
+        document.getElementById("labeldiv1").innerHTML = html;
+    }
+
+    function Function22() { //教师
+        var d1 = document.getElementById('input2').value;
+        var html = "<TR>\n" +
+            "<TD>上课班号</TD>" +
+            "<TD>课程名称</TD>" +
+            "<TD>教师姓名</TD>" +
+            "<TD>教学班/开课学院</TD>" +
+            "<TD>周学时</TD>" +
+            "<TD>考核</TD>" +
+            "<TD>上课时间</TD>" +
+            "<TD>上课地点</TD>" +
+            "<TD>校区</TD>" +
+            "<TD>备注</TD>" +
+            "<TD>授课方式</TD>" +
+            "<TD>是否短学期</TD>" +
+            "<TD>容量(人数)</TD>" +
+            "<TD>教材名称</TD>" +
+            "<TD>学分</TD>" +
+            "</TR>";
+        $.ajax({
+            url: "courses/teacher",
+            type: "get",
+            dataType: "json",
+            data: "teachername=" + d1,
+            async: false,
+            success: function (data, textStatus) {
+                for (var i = 0; i < data.length; i++) {
+                    html += "<tr>" +
+                        "<td>" + data[i].kechengdaima + "</td>" +
+                        "<td>" + data[i].kechengmingcheng + "</td>" +
+                        "<td>" + data[i].jiaoshixingming + "</td>" +
+                        "<td>" + data[i].jiaoxueban + "</td>" +
+                        "<td>" + data[i].zhouxueshi + "</td>" +
+                        "<td>" + data[i].kaohe + "</td>" +
+                        "<td>" + data[i].shangkeshijian + "</td>" +
+                        "<td>" + data[i].shangkedidian + "</td>" +
+                        "<td>" + data[i].xiaoqv + "</td>" +
+                        "<td>" + data[i].beizhu + "</td>" +
+                        "<td>" + data[i].shoukefangshi + "</td>" +
+                        "<td>" + data[i].shifouduanxueqi + "</td>" +
+                        "<td>" + data[i].rongliang + "</td>" +
+                        "<td>" + data[i].jiaocaimingcheng + "</td>" +
+                        "<td>" + data[i].xuefen + "</td>" +
+                        "</tr>";
+                }
+            }
+        });
+        $("#labeldiv2").html(html);
+    }
+
+    function Function3() {//学院
+        $("#mainfield").html("<div id=\"labeldiv1\"></div>\n" +
+            "            <div id=\"labeldiv2\"></div>");
+        var html = "<input id=\"input2\" type=\"text\">\n" +
+            "            <button id=\"button2\" type=\"button\" onclick='Function33()'>输入学院名称并点击</button>";
+        document.getElementById("labeldiv1").innerHTML = html;
+    }
+
+    function Function33() { //学院
+        var d1 = document.getElementById('input2').value;
+        var html = "<TR>\n" +
+            "<TD>上课班号</TD>" +
+            "<TD>课程名称</TD>" +
+            "<TD>学分</TD>" +
+            "<TD>周学时</TD>" +
+            "</TR>";
+        $.ajax({
+            url: "courses/institute",
+            type: "get",
+            dataType: "json",
+            data: "institute=" + d1,
+            async: false,
+            success: function (data, textStatus) {
+                for (var i = 0; i < data.length; i++) {
+                    html += "<br>" + "<tr>" +
+                        "<td>" + data[i].kechengdaima + "</td>" +
+                        "<td>" + data[i].kechengmingcheng + "</td>" +
+                        "<td>" + data[i].xuefen + "</td>" +
+                        "<td>" + data[i].zhouxueshi + "</td>" +
+                        "</tr>" + "</br>";
+                }
+            }
+        });
+        $("#labeldiv2").html(html);
+    }
+
+    function Function4() {//课程名称
+        $("#mainfield").html("<div id=\"labeldiv1\"></div>\n" +
+            "            <div id=\"labeldiv2\"></div>");
+        var html = "<input id=\"input2\" type=\"text\">\n" +
+            "            <button id=\"button2\" type=\"button\" onclick='Function44()'>输入课程名称并点击</button>";
+        document.getElementById("labeldiv1").innerHTML = html;
+    }
+
+    function Function44() { //课程名称
+        var d1 = document.getElementById('input2').value;
+        var html = "<TR>\n" +
+            "<TD>上课班号</TD>" +
+            "<TD>课程名称</TD>" +
+            "<TD>教师姓名</TD>" +
+            "<TD>教学班/开课学院</TD>" +
+            "<TD>周学时</TD>" +
+            "<TD>考核</TD>" +
+            "<TD>上课时间</TD>" +
+            "<TD>上课地点</TD>" +
+            "<TD>校区</TD>" +
+            "<TD>备注</TD>" +
+            "<TD>授课方式</TD>" +
+            "<TD>是否短学期</TD>" +
+            "<TD>容量(人数)</TD>" +
+            "<TD>教材名称</TD>" +
+            "<TD>学分</TD>" +
+            "</TR>";
+        $.ajax({
+            url: "courses/curriculum",
+            type: "get",
+            dataType: "json",
+            data: "curriculum=" + d1,
+            async: false,
+            success: function (data, textStatus) {
+                for (var i = 0; i < data.length; i++) {
+                    html += "<tr>" +
+                        "<td>" + data[i].kechengdaima + "</td>" +
+                        "<td>" + data[i].kechengmingcheng + "</td>" +
+                        "<td>" + data[i].jiaoshixingming + "</td>" +
+                        "<td>" + data[i].jiaoxueban + "</td>" +
+                        "<td>" + data[i].zhouxueshi + "</td>" +
+                        "<td>" + data[i].kaohe + "</td>" +
+                        "<td>" + data[i].shangkeshijian + "</td>" +
+                        "<td>" + data[i].shangkedidian + "</td>" +
+                        "<td>" + data[i].xiaoqv + "</td>" +
+                        "<td>" + data[i].beizhu + "</td>" +
+                        "<td>" + data[i].shoukefangshi + "</td>" +
+                        "<td>" + data[i].shifouduanxueqi + "</td>" +
+                        "<td>" + data[i].rongliang + "</td>" +
+                        "<td>" + data[i].jiaocaimingcheng + "</td>" +
+                        "<td>" + data[i].xuefen + "</td>" +
+                        "</tr>";
+                }
+
+            }
+        });
+        $("#labeldiv2").html(html);
+    }
+
+    function Function5() {//代码
+        $("#mainfield").html("<div id=\"labeldiv1\"></div>\n" +
+            "            <div id=\"labeldiv2\"></div>");
+        var html = "<input id=\"input2\" type=\"text\">\n" +
+            "            <button id=\"button2\" type=\"button\" onclick='Function55()'>输入课程代码并点击</button>";
+        document.getElementById("labeldiv1").innerHTML = html;
+
+    }
+
+    function Function55() { //代码
+        var d1 = document.getElementById('input2').value;
+        var html = "<TR>\n" +
+            "<TD>上课班号</TD>" +
+            "<TD>课程名称</TD>" +
+            "<TD>教师姓名</TD>" +
+            "<TD>教学班/开课学院</TD>" +
+            "<TD>周学时</TD>" +
+            "<TD>考核</TD>" +
+            "<TD>上课时间</TD>" +
+            "<TD>上课地点</TD>" +
+            "<TD>校区</TD>" +
+            "<TD>备注</TD>" +
+            "<TD>授课方式</TD>" +
+            "<TD>是否短学期</TD>" +
+            "<TD>容量(人数)</TD>" +
+            "<TD>教材名称</TD>" +
+            "<TD>学分</TD>" +
+            "</TR>";
+        $.ajax({
+            url: "courses/code",
+            type: "get",
+            dataType: "json",
+            data: "code=" + d1,
+            async: false,
+            success: function (data, textStatus) {
+                for (var i = 0; i < data.length; i++) {
+                    html += "<tr>" +
+                        "<td>" + data[i].kechengdaima + "</td>" +
+                        "<td>" + data[i].kechengmingcheng + "</td>" +
+                        "<td>" + data[i].jiaoshixingming + "</td>" +
+                        "<td>" + data[i].jiaoxueban + "</td>" +
+                        "<td>" + data[i].zhouxueshi + "</td>" +
+                        "<td>" + data[i].kaohe + "</td>" +
+                        "<td>" + data[i].shangkeshijian + "</td>" +
+                        "<td>" + data[i].shangkedidian + "</td>" +
+                        "<td>" + data[i].xiaoqv + "</td>" +
+                        "<td>" + data[i].beizhu + "</td>" +
+                        "<td>" + data[i].shoukefangshi + "</td>" +
+                        "<td>" + data[i].shifouduanxueqi + "</td>" +
+                        "<td>" + data[i].rongliang + "</td>" +
+                        "<td>" + data[i].jiaocaimingcheng + "</td>" +
+                        "<td>" + data[i].xuefen + "</td>" +
+                        "</tr>";
+                }
+
+            }
+        });
+        $("#labeldiv2").html(html);
+    }
+
+
+    function Function6() {
+        $("#mainfield").html("<div id=\"labeldiv1\"></div>\n" +
+            "            <div id=\"labeldiv2\"></div>");
+        var html = "";
+        $.ajax({
+
+            url: "aboutauthor", //请求后台
+            type: "get",
+            dataType: "text",
+            async: false,
+            success: function (data, textStatus) {
+                html = data;
+            }
+        });
+        document.getElementById("mainfield").innerHTML = html;
+    }
+</script>
+<style>
+    table, th, td {
+        border: 1px solid black;
+        max-width: 200px;
+    }
+</style>
+</head>
+
+<!-- 侧边栏 -->
+<div class="sidebar">
+    <h4>理工课程信息查询</h4>
+
+    <ul class="sidenav animated fadeInUp">
+
+        <li><a id="li1" class="withripple" href="javascript:Function1()"><i></i><span
+                class="sidespan">推荐课程</span><i
+                class="iright pull-right">&gt;</i></a>
+        </li>
+
+        <li><a id="li2" class="withripple" href="javascript:Function2()"><i></i><span
+                class="sidespan">按教师姓名查询</span><i
+                class="iright pull-right">&gt;</i></a>
+        </li>
+
+        <li><a id="li3" class="withripple" href="javascript:Function3()"><i></i><span
+                class="sidespan">按学院名称查询</span><i
+                class="iright pull-right">&gt;</i></a>
+        </li>
+
+        <li><a id="li4" class="withripple" href="javascript:Function4()"><i></i><span
+                class="sidespan">按课程名称查询</span><i
+                class="iright pull-right">&gt;</i></a>
+        </li>
+
+        <li><a id="li5" class="withripple" href="javascript:Function5()"><i></i><span
+                class="sidespan">按课程代码查询</span><i
+                class="iright pull-right">&gt;</i></a>
+        </li>
+
+        <li><a id="li6" class="withripple" href="javascript:Function6()"><i></i><span
+                class="sidespan">关于作者</span><i
+                class="iright pull-right">&gt;</i></a>
+        </li>
+    </ul>
+</div>
+
+<div id="mainfield" style="position:absolute;left:225px">
+    <h3 style="position:fixed;left:400px;top: 150px;">知识没有边界</h3>
+    <div id="labeldiv1"></div>
+    <div id="labeldiv2"></div>
+
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.litanyue.dao.CourseDao">
+
+    <!--use to test-->
+    <select id="findAll" resultType="cn.litanyue.pojo.Course">
+        select
+        *
+        from courses where kechengdaima='02030';
+    </select>
+
+
+    <!--select by jiaoxueban-->
+    <select id="findByJiaoxueban" parameterType="java.lang.String" resultType="cn.litanyue.pojo.Course">
+        SELECT
+	    kechengdaima,
+	    max( kechengmingcheng ) AS kechengmingcheng, xuefen,zhouxueshi
+        FROM
+	    courses
+        WHERE
+	    jiaoxueban = #{jiaoxueban}
+        GROUP BY
+	    kechengdaima,
+	    xuefen,
+	    zhouxueshi;
+    </select>
+
+
+    <!--select by jiaoshixingming-->
+    <select id="findByJiaoshixingming" parameterType="java.lang.String" resultType="cn.litanyue.pojo.Course">
+        select * from courses where jiaoshixingming like concat('%',#{teachername},'%')
+
+    </select>
+
+    <select id="findByKechengdaima" parameterType="java.lang.String" resultType="cn.litanyue.pojo.Course">
+        select * from courses where kechengdaima=#{code} ;
+    </select>
+
+    <select id="findByKechengmingcheng" parameterType="java.lang.String" resultType="cn.litanyue.pojo.Course">
+        select
+        *
+        from courses
+        where kechengmingcheng like concat('%',#{curriculum},'%');
+    </select>
+
+    <select id="ResultCode" parameterType="java.lang.String" resultType="cn.litanyue.pojo.Course">
+        select * from courses where kechengdaima=#{code};
+    </select>
+
+
+</mapper>
